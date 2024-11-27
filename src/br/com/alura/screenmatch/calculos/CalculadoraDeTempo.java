@@ -1,13 +1,13 @@
 package br.com.alura.screenmatch.calculos;
 
+import br.com.alura.screenmatch.modelos.Filme;
+import br.com.alura.screenmatch.modelos.Serie;
 import br.com.alura.screenmatch.modelos.Titulo;
-import org.w3c.dom.ls.LSOutput;
 
 public class CalculadoraDeTempo {
-    private int tempoTotal = 0;
+    private int tempoTotal;
 
     public int getTempoTotal() {
-
         return this.tempoTotal;
     }
 
@@ -19,10 +19,8 @@ public class CalculadoraDeTempo {
 //        this.tempoTotal += s.getDuracaoEmMinutos();
 //    }
 
-    public void inclui(Titulo titulo){
+    public void inclui(Titulo titulo) {
         System.out.println("Adicionando duração em minutos de " + titulo);
         this.tempoTotal += titulo.getDuracaoEmMinutos();
     }
-
-
 }
