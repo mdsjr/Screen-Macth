@@ -1,12 +1,31 @@
 package br.com.alura.screenmatch.modelos;
 
-public class Titulo {
+import br.com.alura.screenmatch.excecao.ErroDeConversaoDeAnoException;
+import com.google.gson.annotations.SerializedName;
+
+public class Titulo implements Comparable<Titulo> {
+
     private String nome;
+
     private int anoDeLancamento;
     private boolean incluidoNoPlano;
     private double somaDasAvaliacoes;
     private int totalDeAvaliacoes;
     private int duracaoEmMinutos;
+
+    public Titulo(String nome, int anoDeLancamento) {
+        this.nome = nome;
+        this.anoDeLancamento = anoDeLancamento;
+    }
+
+    public Titulo(TituloOmdb meuTitulOmdb) {
+        this.nome = meuTitulOmdb.title();
+        if (meuTitulOmdb.year().length() > 4) {
+            throw new ErroDeConversaoDeAnoException("Ano de lançamento inválido(>4)");
+        }
+        this.anoDeLancamento = Integer.valueOf(meuTitulOmdb.year());
+        this.duracaoEmMinutos = Integer.valueOf(meuTitulOmdb.runtime().substring(0,2));
+    }
 
     public String getNome() {
         return nome;
@@ -56,5 +75,27 @@ public class Titulo {
 
     public double pegaMedia(){
         return somaDasAvaliacoes / totalDeAvaliacoes;
+    }
+
+    @Override
+    public Titulo clone() {
+                try {
+                    Titulo clone = (Titulo) super.clone();
+                    // TODO: copy mutable state here, so the clone can't change the internals of the original
+                    return clone;
+                } catch (CloneNotSupportedException e) {
+                    throw new AssertionError();
+                }
+    }
+
+    @Override
+    public int compareTo(Titulo outroTitulo) {
+        return this.getNome().compareTo(outroTitulo.getNome());
+    }
+
+    @Override
+    public String toString() {
+        return   "(nome= " + nome +
+                ", anoDeLancamento= " + anoDeLancamento + "," + " duração= " + duracaoEmMinutos + ")";
     }
 }

@@ -1,0 +1,1 @@
+nome='Her', anoDeLancamento=2013, duracaoEmMinutos=126
